@@ -23,7 +23,7 @@ function Overview() {
   ).length;
 
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6 my-10 mx-auto max-w-3xl text-gray-800">
+    <div className="bg-white rounded-2xl shadow-md w-full p-6 text-gray-800">
       <h2 className="text-3xl font-bold text-blue-600 mb-6">
         Financial Overview
       </h2>
@@ -61,7 +61,7 @@ function Overview() {
             deadlineText = "Completed";
             icon = <CheckCircle className="text-green-600" size={18} />;
           } else if (left < 0) {
-            deadlineText = `Overdue by ${-left} days`;
+            deadlineText = `Overdue`;
             icon = <XCircle className="text-red-600" size={18} />;
             color = "text-red-600";
           } else {
