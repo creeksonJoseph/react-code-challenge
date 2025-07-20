@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // 💥 NEW
+import { useNavigate } from "react-router-dom";
 import GoalList from "../components/GoalList";
 
 function Dashboard() {
   const [goals, setGoals] = useState([]);
-  const navigate = useNavigate(); // 🔥
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:3000/goals")
