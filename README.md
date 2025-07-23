@@ -50,14 +50,7 @@ npm install
 
 ### Running the App
 
-After installing dependencies, you need to run two servers:
-
-Start the JSON Server:
-
-```bash
-json-server --watch db.json --port 3000
-```
-In a new terminal tab or window, start the React app:
+After installing dependencies,start the React app:
 
 ```bash
 npm run dev
