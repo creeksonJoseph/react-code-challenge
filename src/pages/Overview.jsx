@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { CalendarDays, CheckCircle, XCircle } from "lucide-react";
-
+import { API } from "../App";
 function daysLeft(deadline) {
   const now = new Date();
   const end = new Date(deadline);
@@ -11,7 +11,7 @@ function Overview() {
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/goals")
+    fetch(`${API}goals`)
       .then((r) => r.json())
       .then(setGoals);
   }, []);

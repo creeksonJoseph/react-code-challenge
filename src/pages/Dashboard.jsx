@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GoalList from "../components/GoalList";
+import { API } from "../App";
 
 function Dashboard() {
   const [goals, setGoals] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3000/goals")
+    fetch(`${API}goals`)
       .then((r) => r.json())
       .then(setGoals);
   }, []);
 
   function handleDelete(id) {
-    fetch(`http://localhost:3000/goals/${id}`, { method: "DELETE" }).then(() =>
+    fetch(`${API}goals/${id}`, { method: "DELETE" }).then(() =>
       setGoals(goals.filter((g) => g.id !== id))
     );
   }

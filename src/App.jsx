@@ -3,6 +3,7 @@ import Dashboard from "./pages/Dashboard";
 import Overview from "./pages/Overview";
 import GoalForm from "./components/GoalForm";
 import "./App.css";
+export const API = "https://code-challenge-server-erbb.onrender.com/";
 
 function App() {
   return (

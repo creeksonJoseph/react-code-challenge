@@ -13,7 +13,7 @@ function GoalForm() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch("http://localhost:3000/goals", {
+    fetch(`${API}goals`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...formData, savedAmount: 0 }),

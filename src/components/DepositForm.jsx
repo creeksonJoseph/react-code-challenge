@@ -4,7 +4,7 @@ function DepositForm({ goal, onDeposit }) {
   const [amount, setAmount] = useState("");
   function handleSubmit(e) {
     e.preventDefault();
-    fetch(`http://localhost:3000/goals/${goal.id}`, {
+    fetch(`${API}goals/${goal.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
