@@ -32,40 +32,49 @@ Smart Goal Planner is a React-based web application that allows users to set, tr
 ```bash
 npm install -g json-server
 ```
+
 ## Installation
+
 Clone this repository
 
 ```bash
 git clone https://github.com/your-username/smart-goal-planner.git
 cd smart-goal-planner
 ```
+
 ### Install dependencies
 
 ```bash
 npm install
 ```
+
 ### Running the App
+
 After installing dependencies, you need to run two servers:
 
 Start the JSON Server:
 
-``` bash
+```bash
 json-server --watch db.json --port 3000
 ```
+
 In a new terminal tab or window, start the React app:
 
-``` bash
+```bash
 npm run dev
 ```
+
 The application will be available at http://localhost:5173 and will fetch/save data from http://localhost:3000.
 
+#### Live deployment
+
+Or you can view the live app at :
+https://react-code-challenge-phi.vercel.app/
 
 ## Notes
+
 This project is front-end only and uses JSON Server as a mock backend.
 
-
-
-
-
 ## License
+
 This project is intended for educational use only and is not licensed for commercial distribution.
