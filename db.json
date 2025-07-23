@@ -31,7 +31,7 @@
       "id": "4",
       "name": "Down Payment - House",
       "targetAmount": 50000,
-      "savedAmount": 12000,
+      "savedAmount": 15000,
       "category": "Real Estate",
       "deadline": "2027-12-31",
       "createdAt": "2024-02-01"
