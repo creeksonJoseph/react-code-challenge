@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API } from "../App";
 
 function DepositForm({ goal, onDeposit }) {
   const [amount, setAmount] = useState("");
@@ -29,7 +30,9 @@ function DepositForm({ goal, onDeposit }) {
         required
         style={{ width: 80, marginRight: 4, padding: 4 }}
       />
-      <button type="submit">Deposit</button>
+      <button type="submit" className="text-white bg-black rounded">
+        Deposit
+      </button>
     </form>
   );
 }

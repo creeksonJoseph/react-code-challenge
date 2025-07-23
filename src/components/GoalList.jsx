@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ProgressBar from "./ProgressBar";
 import DepositForm from "./DepositForm";
+import { API } from "../App";
 
 function GoalList({ goals, onDelete, onDeposit, onEdit }) {
   return (
