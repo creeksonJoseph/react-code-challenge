@@ -21,50 +21,55 @@ function GoalForm() {
     })
       .then((r) => r.json())
       .then(() => {
-        navigate("/"); // go back to dashboard after adding
+        navigate("/"); // back to dashboard
       });
   }
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto p-6 bg-white shadow rounded-xl"
+      className="max-w-lg mx-auto mt-12 p-8 bg-[#141d38] text-[#fcdb32] shadow-2xl rounded-2xl border border-[#fcdb32] backdrop-blur-md"
     >
-      <h2 className="text-xl font-semibold mb-4 text-center">Add a New Goal</h2>
+      <h2 className="text-3xl font-bold mb-6 text-center">🎯 Set a New Goal</h2>
 
+      <label className="block mb-2 text-sm font-semibold">Goal Name</label>
       <input
         type="text"
-        placeholder="Goal Name"
+        placeholder="e.g. New Laptop"
         value={formData.name}
         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        className="w-full border p-2 rounded mb-4"
+        className="w-full mb-6 px-4 py-2 rounded-lg border border-[#fcdb32] bg-[#141d38] text-white focus:outline-none focus:ring-2 focus:ring-[#fcdb32]"
         required
       />
 
+      <label className="block mb-2 text-sm font-semibold">
+        Target Amount (KES)
+      </label>
       <input
         type="number"
-        placeholder="Target Amount"
+        placeholder="e.g. 50000"
         value={formData.targetAmount}
         onChange={(e) =>
           setFormData({ ...formData, targetAmount: parseFloat(e.target.value) })
         }
-        className="w-full border p-2 rounded mb-4"
+        className="w-full mb-6 px-4 py-2 rounded-lg border border-[#fcdb32] bg-[#141d38] text-white focus:outline-none focus:ring-2 focus:ring-[#fcdb32]"
         required
       />
 
+      <label className="block mb-2 text-sm font-semibold">Deadline</label>
       <input
         type="date"
         value={formData.deadline}
         onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
-        className="w-full border p-2 rounded mb-4"
+        className="w-full mb-6 px-4 py-2 rounded-lg border border-[#fcdb32] bg-[#141d38] text-white focus:outline-none focus:ring-2 focus:ring-[#fcdb32]"
         required
       />
 
       <button
         type="submit"
-        className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded w-full"
+        className="bg-[#fcdb32] text-[#141d38] font-bold hover:bg-yellow-400 transition-colors duration-200 py-3 px-6 rounded-lg w-full"
       >
-        Save Goal
+        🚀 Save Goal
       </button>
     </form>
   );

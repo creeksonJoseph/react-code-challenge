@@ -28,23 +28,29 @@ function Dashboard() {
   }
 
   return (
-    <div className="w-full p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">My Goals</h1>
+    <div className="min-h-screen p-6 bg-[#141d38] text-[#fcdb32]">
+      <div className="flex justify-between items-center mb-8 border-b border-[#fcdb32] pb-4">
+        <h1 className="text-3xl font-bold tracking-wide">🎯 My Goals</h1>
         <button
           onClick={() => navigate("/goalForm")}
-          className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg shadow"
+          className="bg-[#fcdb32] text-[#141d38] font-semibold hover:bg-yellow-400 transition-colors duration-200 py-2 px-5 rounded-lg shadow-lg"
         >
           + Add Goal
         </button>
       </div>
 
-      <GoalList
-        goals={goals}
-        onDelete={handleDelete}
-        onDeposit={handleDeposit}
-        onEdit={handleEdit}
-      />
+      {goals.length > 0 ? (
+        <GoalList
+          goals={goals}
+          onDelete={handleDelete}
+          onDeposit={handleDeposit}
+          onEdit={handleEdit}
+        />
+      ) : (
+        <div className="text-center text-lg mt-20 opacity-70">
+          You haven’t added any goals yet. Let’s change that! 💪
+        </div>
+      )}
     </div>
   );
 }

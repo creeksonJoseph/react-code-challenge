@@ -5,43 +5,64 @@ import { API } from "../App";
 
 function GoalList({ goals, onDelete, onDeposit, onEdit }) {
   return (
-    <ul className="max-w-3xl mx-auto p-4 space-y-6">
-      {goals.map((g) => (
+    <ul className="max-w-5xl mx-auto p-4 space-y-8">
+      {goals.map((goal) => (
         <li
-          key={g.id}
-          className="bg-white rounded-2xl shadow-md p-6 flex flex-col gap-4"
+          key={goal.id}
+          className="bg-white rounded-2xl shadow-lg p-6 flex flex-col gap-4 border-l-4 border-yellow-400"
         >
+          {/* Header: Title & Category */}
           <div className="flex justify-between items-center">
-            <h3 className="text-xl font-semibold text-gray-800">{g.name}</h3>
-            <span className="text-sm text-blue-500 bg-blue-100 px-2 py-1 rounded-full">
-              {g.category}
+            <h2 className="text-2xl font-bold text-[#141d38]">{goal.name}</h2>
+            <span className="text-sm font-medium bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
+              {goal.category}
             </span>
           </div>
 
-          <div className="text-sm text-gray-600">
-            <span className="font-medium text-green-600">
-              ${g.savedAmount.toLocaleString()}
+          {/* Amounts: Saved / Target */}
+          <div className="text-gray-700 text-sm">
+            <span className="font-semibold text-green-600">
+              ${goal.savedAmount.toLocaleString()}
             </span>{" "}
-            / ${g.targetAmount.toLocaleString()}
-          </div>
-
-          <ProgressBar current={g.savedAmount} target={g.targetAmount} />
-
-          <div className="text-sm text-gray-500">
-            Remaining:{" "}
-            <span className="text-red-500">
-              ${Math.max(g.targetAmount - g.savedAmount, 0).toLocaleString()}
+            of{" "}
+            <span className="font-semibold text-[#141d38]">
+              ${goal.targetAmount.toLocaleString()}
             </span>
           </div>
 
-          <DepositForm goal={g} onDeposit={onDeposit} />
-          <EditGoalForm goal={g} onEdit={onEdit} />
+          {/* Progress */}
+          <ProgressBar current={goal.savedAmount} target={goal.targetAmount} />
 
+          {/* Remaining + Deadline */}
+          <div className="flex flex-wrap justify-between text-sm text-gray-600">
+            <p>
+              Remaining:{" "}
+              <span className="text-red-500 font-medium">
+                $
+                {Math.max(
+                  goal.targetAmount - goal.savedAmount,
+                  0
+                ).toLocaleString()}
+              </span>
+            </p>
+            <p>
+              Deadline:{" "}
+              <span className="text-blue-600 font-medium">
+                {goal.deadline || "No deadline"}
+              </span>
+            </p>
+          </div>
+
+          {/* Deposit & Edit Forms */}
+          <DepositForm goal={goal} onDeposit={onDeposit} />
+          <EditGoalForm goal={goal} onEdit={onEdit} />
+
+          {/* Delete Button */}
           <button
-            onClick={() => onDelete(g.id)}
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg self-start"
+            onClick={() => onDelete(goal.id)}
+            className="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded-md w-fit"
           >
-            Delete
+            Delete Goal
           </button>
         </li>
       ))}
@@ -59,24 +80,39 @@ function EditGoalForm({ goal, onEdit }) {
   });
 
   function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
   }
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    const updatedGoal = {
+      name: form.name.trim(),
+      targetAmount: Number(form.targetAmount),
+      category: form.category.trim(),
+      deadline: form.deadline,
+    };
+
+    // Basic validation
+    if (
+      !updatedGoal.name ||
+      !updatedGoal.targetAmount ||
+      !updatedGoal.category ||
+      !updatedGoal.deadline
+    ) {
+      alert("Please fill in all fields");
+      return;
+    }
+
     fetch(`${API}goals/${goal.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: form.name,
-        targetAmount: Number(form.targetAmount),
-        category: form.category,
-        deadline: form.deadline,
-      }),
+      body: JSON.stringify(updatedGoal),
     })
       .then((r) => r.json())
-      .then((updatedGoal) => {
-        onEdit(updatedGoal);
+      .then((data) => {
+        onEdit(data);
         setEditing(false);
       });
   }
@@ -85,9 +121,9 @@ function EditGoalForm({ goal, onEdit }) {
     return (
       <button
         onClick={() => setEditing(true)}
-        className="text-blue-600 hover:underline text-sm"
+        className="text-sm text-blue-600 hover:underline"
       >
-        Edit
+        Edit Goal
       </button>
     );
   }
@@ -95,54 +131,59 @@ function EditGoalForm({ goal, onEdit }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col sm:flex-row sm:flex-wrap gap-2 items-start mt-2"
+      className="flex flex-col sm:flex-row flex-wrap gap-3 mt-3"
     >
       <input
+        type="text"
         name="name"
         value={form.name}
         onChange={handleChange}
-        required
         placeholder="Name"
-        className="border px-2 py-1 rounded-md"
+        className="flex-1 border px-3 py-2 rounded-md text-sm"
+        required
       />
       <input
-        name="targetAmount"
         type="number"
+        name="targetAmount"
         value={form.targetAmount}
         onChange={handleChange}
+        placeholder="Target Amount"
+        className="flex-1 border px-3 py-2 rounded-md text-sm"
         required
-        placeholder="Target"
-        className="border px-2 py-1 rounded-md"
+        min="1"
       />
       <input
+        type="text"
         name="category"
         value={form.category}
         onChange={handleChange}
-        required
         placeholder="Category"
-        className="border px-2 py-1 rounded-md"
+        className="flex-1 border px-3 py-2 rounded-md text-sm"
+        required
       />
       <input
-        name="deadline"
         type="date"
+        name="deadline"
         value={form.deadline}
         onChange={handleChange}
+        className="flex-1 border px-3 py-2 rounded-md text-sm"
         required
-        className="border px-2 py-1 rounded-md"
       />
-      <button
-        type="submit"
-        className="bg-green-500 text-white px-3 py-1 rounded-md"
-      >
-        Save
-      </button>
-      <button
-        type="button"
-        onClick={() => setEditing(false)}
-        className="text-gray-500 underline"
-      >
-        Cancel
-      </button>
+      <div className="flex gap-2">
+        <button
+          type="submit"
+          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          onClick={() => setEditing(false)}
+          className="text-sm text-gray-500 underline"
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   );
 }
